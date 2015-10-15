@@ -89,6 +89,12 @@ public class BastilleCore extends JavaPlugin {
         return null;
     }
     
+    public void removeBossTracker(UUID uuid) {
+        if (_bosses.containsKey(uuid)) {
+            _bosses.remove(uuid);
+        }
+    }
+    
     /**
      * Player communication function, uses our defined 'plugin color'
      * @param player

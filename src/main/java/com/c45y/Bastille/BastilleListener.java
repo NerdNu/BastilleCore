@@ -49,5 +49,7 @@ public class BastilleListener implements Listener {
         }
         // Pass our death event on to the boss
         boss.onDeath(event);
+        
+        _plugin.removeBossTracker(event.getEntity().getUniqueId());
     }
 }

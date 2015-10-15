@@ -76,8 +76,8 @@ public class BastilleCommand implements CommandExecutor  {
             }
             String boss = args[1];
             int x = Integer.valueOf(args[2]);
-            int y = Integer.valueOf(args[2]);
-            int z = Integer.valueOf(args[2]);
+            int y = Integer.valueOf(args[3]);
+            int z = Integer.valueOf(args[4]);
             World w = player.getWorld();
             if (args.length == 5) {
                 w = _plugin.getServer().getWorld(args[5]);
