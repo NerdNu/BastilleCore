@@ -24,6 +24,8 @@
 package com.c45y.Bastille.command;
 
 import com.c45y.Bastille.BastilleCore;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,6 +42,14 @@ public class BastilleCommand implements CommandExecutor  {
         _plugin = plugin;
     }
 
+    /**
+     *
+     * @param sender
+     * @param cmd
+     * @param label
+     * @param args
+     * @return
+     */
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("You don't seem to be a player, try running these commands from in game.");
@@ -55,7 +65,33 @@ public class BastilleCommand implements CommandExecutor  {
         if (args.length == 0) {
             player.sendMessage("Requires args: summon, ...");
             return true;
-        }  
+        }
+        
+        /*      1      2   3   4   5
+        /summon <boss> <x> <y> <z> [world] */
+        if (args[0].equalsIgnoreCase("summon")) {
+            if (args.length < 4) {
+                _plugin.sendPlayerMessage(player, "Missing args. /summon <boss> <x> <y> <z> [world]");
+                return true;
+            }
+            String boss = args[1];
+            int x = Integer.valueOf(args[2]);
+            int y = Integer.valueOf(args[2]);
+            int z = Integer.valueOf(args[2]);
+            World w = player.getWorld();
+            if (args.length == 5) {
+                w = _plugin.getServer().getWorld(args[5]);
+                if (w == null) {
+                    _plugin.sendPlayerMessage(player, "Invalid args. Could not find world " + args[5]);
+                    return true;
+                }
+            }
+            
+            if (!_plugin.spawnBoss(boss, new Location(w, x, y, z))) {
+                _plugin.sendPlayerMessage(player, "Invalid args. Could not find boss " + boss);
+            }
+            return true;
+        }
         
         
         return false;

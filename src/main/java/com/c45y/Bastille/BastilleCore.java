@@ -23,14 +23,21 @@
  */
 package com.c45y.Bastille;
 
+import com.c45y.Bastille.boss.BastilleBoss;
+import com.c45y.Bastille.boss.George;
 import com.c45y.Bastille.command.BastilleCommand;
+import java.util.HashMap;
+import java.util.UUID;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BastilleCore extends JavaPlugin {
     private static BastilleCore _instance;
     private BastilleListener _listener;
+    
+    private HashMap<UUID, BastilleBoss> _bosses;
     
     public final ChatColor _pluginColor = ChatColor.GREEN;
     
@@ -44,6 +51,8 @@ public class BastilleCore extends JavaPlugin {
         /* Create a static reference to ourself */
         _instance = this;
         
+        _bosses = new HashMap<UUID, BastilleBoss>();
+        
         /* Register our listener(s) */
         _listener = new BastilleListener(this);
         getServer().getPluginManager().registerEvents(_listener, this);
@@ -54,6 +63,30 @@ public class BastilleCore extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
+    }
+    
+    public boolean spawnBoss(String name, Location location) {
+        // There has to be a better way of doing this?
+        
+        if (name.equalsIgnoreCase("George")) {
+            George g = new George(this);
+            g.registerTracking();
+            g.spawn(location);
+            return true;
+        } // else { ....
+
+        return false;
+    }
+    
+    public void putBossTracker(BastilleBoss boss) {
+        _bosses.put(boss.getEntity().getUniqueID(), boss);
+    }
+    
+    public BastilleBoss getBossTracker(UUID uuid) {
+        if (_bosses.containsKey(uuid)) {
+            return _bosses.get(uuid);
+        }
+        return null;
     }
     
     /**

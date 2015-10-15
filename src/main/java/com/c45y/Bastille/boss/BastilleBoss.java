@@ -21,33 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.c45y.Bastille;
+package com.c45y.Bastille.boss;
 
-import com.c45y.Bastille.boss.BastilleBoss;
+import com.c45y.Bastille.BastilleCore;
+import com.c45y.Bastille.BastilleEntity;
+import org.bukkit.Location;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 
 /**
  *
  * @author c45y
  */
-public class BastilleListener implements Listener {
-    private final BastilleCore _plugin;
+public abstract class BastilleBoss {
+    protected BastilleCore _plugin;
+    protected BastilleEntity _entity;
+    private String _name;
     
-    public BastilleListener(BastilleCore plugin) {
+    public BastilleBoss(BastilleCore plugin, String name) {
         _plugin = plugin;
+        _name = name;
     }
     
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onEntityDeath(EntityDeathEvent event) {
-        BastilleBoss boss = _plugin.getBossTracker(event.getEntity().getUniqueId());
-        
-        if (boss == null) {
-            return;
-        }
-        // Pass our death event on to the boss
-        boss.onDeath(event);
+    public String getName() {
+        return _name;
+    }
+    
+    public BastilleEntity getEntity() {
+        return _entity;
+    }
+    
+    
+    /**
+     * Spawn our boss mob, should be a fairly direct mapping to Bastille*.spawn
+     * @param location
+     */
+    public abstract void spawn(Location location);
+    
+    /**
+     * Called when our mob dies presuming it has been registered
+     * @param event
+    */
+    public abstract void onDeath(EntityDeathEvent event);
+    
+    
+    public final void registerTracking() {
+        _plugin.putBossTracker(this);
     }
 }

@@ -21,33 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.c45y.Bastille;
+package com.c45y.Bastille.boss;
 
-import com.c45y.Bastille.boss.BastilleBoss;
+import com.c45y.Bastille.BastilleCore;
+import com.c45y.Bastille.Entities.BastilleBlaze;
+import org.bukkit.Location;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 
 /**
  *
  * @author c45y
  */
-public class BastilleListener implements Listener {
-    private final BastilleCore _plugin;
+public class George extends BastilleBoss {
     
-    public BastilleListener(BastilleCore plugin) {
-        _plugin = plugin;
+    public George(BastilleCore plugin) {
+        super(plugin, "George");
+    }
+
+    @Override
+    public void spawn(Location location) {
+        _entity = new BastilleBlaze(location.getWorld());
+        _entity = _entity.maxhealth(2000D).health(2000F);
+        _entity.spawn(location);
+    }
+
+    @Override
+    public void onDeath(EntityDeathEvent event) {
+        event.setDroppedExp(event.getDroppedExp() * 100);
     }
     
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onEntityDeath(EntityDeathEvent event) {
-        BastilleBoss boss = _plugin.getBossTracker(event.getEntity().getUniqueId());
-        
-        if (boss == null) {
-            return;
-        }
-        // Pass our death event on to the boss
-        boss.onDeath(event);
-    }
 }
