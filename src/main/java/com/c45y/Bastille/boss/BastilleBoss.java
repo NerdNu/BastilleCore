@@ -35,7 +35,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 public abstract class BastilleBoss {
     protected BastilleCore _plugin;
     protected BastilleEntity _entity;
-    private String _name;
+    protected String _name;
     
     public BastilleBoss(BastilleCore plugin, String name) {
         _plugin = plugin;

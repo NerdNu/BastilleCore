@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.c45y</groupId>
-    <artifactId>Bastille</artifactId>
+    <artifactId>BastilleCore</artifactId>
     <version>1.0</version>
     <name>Bastille-Core</name>
     <url>http://c45y.com/</url>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.c45y</groupId>
             <artifactId>BastilleEntities</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
     </dependencies>
 </project>

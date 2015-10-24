@@ -79,7 +79,7 @@ public class BastilleCommand implements CommandExecutor  {
             int y = Integer.valueOf(args[3]);
             int z = Integer.valueOf(args[4]);
             World w = player.getWorld();
-            if (args.length == 5) {
+            if (args.length == 6) {
                 w = _plugin.getServer().getWorld(args[5]);
                 if (w == null) {
                     _plugin.sendPlayerMessage(player, "Invalid args. Could not find world " + args[5]);

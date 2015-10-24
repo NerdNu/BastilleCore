@@ -47,6 +47,7 @@ public class George extends BastilleBoss {
 
     @Override
     public void onDeath(EntityDeathEvent event) {
+        _plugin.sendPlayerMessage(event.getEntity().getKiller(), "Congratulations on killing " + _name);
         event.setDroppedExp(event.getDroppedExp() * 100);
     }
     

@@ -70,8 +70,8 @@ public class BastilleCore extends JavaPlugin {
         
         if (name.equalsIgnoreCase("George")) {
             George g = new George(this);
-            g.registerTracking();
             g.spawn(location);
+            g.registerTracking();
             return true;
         } // else { ....
 

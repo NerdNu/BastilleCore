@@ -3,11 +3,6 @@ main: com.c45y.Bastille.BastilleCore
 version: ${project.version}
 author: C45Y
 depend: [BastilleEntities]
-permissions:
-    bastille.op:
-        description: Bastille administrator
-        default: op
 commands:
   bastille:
     description: Bastille administrative command
-    permission: bastille.op
