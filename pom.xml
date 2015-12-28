@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.c45y</groupId>
     <artifactId>BastilleCore</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <name>Bastille-Core</name>
     <url>http://c45y.com/</url>
     <repositories>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.c45y</groupId>
             <artifactId>BastilleEntities</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 </project>

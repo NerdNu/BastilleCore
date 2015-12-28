@@ -25,7 +25,9 @@ package com.c45y.Bastille.boss;
 
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.Entities.BastilleBlaze;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 /**
@@ -42,13 +44,18 @@ public class George extends BastilleBoss {
     public void spawn(Location location) {
         _entity = new BastilleBlaze(location.getWorld());
         _entity = _entity.maxhealth(2000D).health(2000F);
+        _entity = _entity.damage(10);
+        
+        _entity.setCustomName("George");
+        _entity.setCustomNameVisible(true);
         _entity.spawn(location);
     }
 
     @Override
     public void onDeath(EntityDeathEvent event) {
-        _plugin.sendPlayerMessage(event.getEntity().getKiller(), "Congratulations on killing " + _name);
-        event.setDroppedExp(event.getDroppedExp() * 100);
+        if (event.getEntity().getKiller() != null && (event.getEntity().getKiller() instanceof Player)) {
+            _plugin.sendPlayerMessage(event.getEntity().getKiller(), ChatColor.GOLD + "Congratulations on killing " + ChatColor.RED + _name);
+            event.setDroppedExp(event.getDroppedExp() * 100);
+        }
     }
-    
 }
