@@ -55,16 +55,5 @@ public abstract class BastilleBoss {
      * Spawn our boss mob, should be a fairly direct mapping to Bastille*.spawn
      * @param location
      */
-    public abstract void spawn(Location location);
-    
-    /**
-     * Called when our mob dies presuming it has been registered
-     * @param event
-    */
-    public abstract void onDeath(EntityDeathEvent event);
-    
-    
-    public final void registerTracking() {
-        _plugin.putBossTracker(this);
-    }
+    public abstract void spawn(Location location); 
 }

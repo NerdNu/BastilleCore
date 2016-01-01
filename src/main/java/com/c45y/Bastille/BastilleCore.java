@@ -23,11 +23,9 @@
  */
 package com.c45y.Bastille;
 
-import com.c45y.Bastille.boss.BastilleBoss;
-import com.c45y.Bastille.boss.George;
+import com.c45y.Bastille.boss.*;
 import com.c45y.Bastille.command.BastilleCommand;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -37,22 +35,22 @@ public class BastilleCore extends JavaPlugin {
     private static BastilleCore _instance;
     private BastilleListener _listener;
     
-    private HashMap<UUID, BastilleBoss> _bosses;
-    
+    private Random pluginRandom = new Random();  
     public final ChatColor _pluginColor = ChatColor.GREEN;
     
     public static BastilleCore getInstance() {
         return _instance;
-    }    
+    }
 
+    public int getRandomChance() {
+        return pluginRandom.nextInt(1000);
+    }
     
     @Override
     public void onEnable() {
         /* Create a static reference to ourself */
         _instance = this;
-        
-        _bosses = new HashMap<UUID, BastilleBoss>();
-        
+                
         /* Register our listener(s) */
         _listener = new BastilleListener(this);
         getServer().getPluginManager().registerEvents(_listener, this);
@@ -68,31 +66,15 @@ public class BastilleCore extends JavaPlugin {
     public boolean spawnBoss(String name, Location location) {
         // There has to be a better way of doing this?
         
-        if (name.equalsIgnoreCase("George")) {
-            George g = new George(this);
-            g.spawn(location);
-            g.registerTracking();
+        if (name.equalsIgnoreCase("SirMeowingtons")) {
+            new SirMeowingtons(this).spawn(location);
+            return true;
+        } else if (name.equalsIgnoreCase("LordPuggleston")) {
+            new LordPuggleSton(this).spawn(location);
             return true;
         } // else { ....
 
         return false;
-    }
-    
-    public void putBossTracker(BastilleBoss boss) {
-        _bosses.put(boss.getEntity().getUniqueID(), boss);
-    }
-    
-    public BastilleBoss getBossTracker(UUID uuid) {
-        if (_bosses.containsKey(uuid)) {
-            return _bosses.get(uuid);
-        }
-        return null;
-    }
-    
-    public void removeBossTracker(UUID uuid) {
-        if (_bosses.containsKey(uuid)) {
-            _bosses.remove(uuid);
-        }
     }
     
     /**

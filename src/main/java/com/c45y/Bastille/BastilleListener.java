@@ -23,11 +23,14 @@
  */
 package com.c45y.Bastille;
 
-import com.c45y.Bastille.boss.BastilleBoss;
-import org.bukkit.event.entity.EntityDeathEvent;
+import com.c45y.Bastille.boss.*;
+import java.util.logging.Level;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 /**
  *
@@ -40,16 +43,28 @@ public class BastilleListener implements Listener {
         _plugin = plugin;
     }
     
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onEntityDeath(EntityDeathEvent event) {
-        BastilleBoss boss = _plugin.getBossTracker(event.getEntity().getUniqueId());
-        
-        if (boss == null) {
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if(event.getSpawnReason() != SpawnReason.NATURAL) {
             return;
         }
-        // Pass our death event on to the boss
-        boss.onDeath(event);
         
-        _plugin.removeBossTracker(event.getEntity().getUniqueId());
+        BastilleBoss boss;
+        
+        switch (_plugin.getRandomChance()) {
+            case 0: 
+                boss = new SirMeowingtons(_plugin);
+                break;
+            case 1:
+                boss = new LordPuggleSton(_plugin);
+                break;
+            default:
+                return;
+        }
+        
+        Location location = event.getEntity().getLocation();
+        _plugin.getLogger().log(Level.INFO, "A boss mob has been spawned | {0} at {1} {2} {3}", new Object[] {boss.getName(), location.getX(), location.getY(), location.getZ()});
+        boss.spawn(location);
+        event.setCancelled(true);
     }
 }
