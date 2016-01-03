@@ -24,59 +24,55 @@
 package com.c45y.Bastille.boss;
 
 import com.c45y.Bastille.BastilleCore;
-import com.c45y.Bastille.Entities.BastilleCaveSpider;
-import net.minecraft.server.v1_8_R3.Blocks;
+import com.c45y.Bastille.Entities.BastilleSkeleton;
 import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Enchantment;
 import net.minecraft.server.v1_8_R3.EntityCreature;
 import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.ItemStack;
+import net.minecraft.server.v1_8_R3.EntitySkeleton;
+import net.minecraft.server.v1_8_R3.PathfinderGoalArrowAttack;
 import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLeapAtTarget;
 import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalMeleeAttack;
 import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomStroll;
 import org.bukkit.Location;
 
 /**
  *
  * @author c45y
  */
-public class LordPuggleSton extends BastilleBoss {
+public class MrSkeletal extends BastilleBoss {
     
-    public LordPuggleSton(BastilleCore plugin) {
-        super(plugin, "Lord Puggleston");
+    public MrSkeletal(BastilleCore plugin) {
+        super(plugin, "Mr Skeletal");
     }
 
     @Override
     public void spawn(Location location) {
-        _entity = new BastilleCaveSpider(location.getWorld());
-        _entity = _entity.maxhealth(20D).health(20F);
-        _entity = _entity.ignoreDamageSource(DamageSource.FIRE);
-        _entity = _entity.speed(0.7F);
-        _entity = _entity.damage(2D);
+        _entity = new BastilleSkeleton(location.getWorld());
+        _entity = _entity.maxhealth(80D).health(80F);
+        _entity = _entity.ignoreDamageSource(DamageSource.FALL);
+        _entity = _entity.speed(0.4F);
+        _entity = _entity.damage(3D);
         
-        ItemStack is = new ItemStack(Blocks.RED_FLOWER);
-        is.addEnchantment(Enchantment.FIRE_ASPECT, 2);
-        _entity.setEquipment(0, is);
-        _entity.setDropChance(0, 0F);
-        
+//        try {
+//            Field field = EntitySkeleton.class.getDeclaredField("explosionRadius");
+//            field.setAccessible(true);
+//            field.setInt(_entity, 12);
+//        } catch (Exception e) {}
+                
         _entity.emtpyGoals();
-        _entity.addGoal(0, new PathfinderGoalMeleeAttack((EntityCreature) _entity, EntityHuman.class, 1.0D, false));
         _entity.addGoal(1, new PathfinderGoalFloat((EntityCreature) _entity));
-        _entity.addGoal(2, new PathfinderGoalLeapAtTarget((EntityCreature) _entity, 0.2F));
-        _entity.addGoal(3, new PathfinderGoalRandomStroll((EntityCreature) _entity, 0.3D));
+        
+        _entity.addGoal(2, new PathfinderGoalArrowAttack((EntitySkeleton) _entity, 0.25D, 20, 10.0F));
         _entity.addGoal(4, new PathfinderGoalLookAtPlayer((EntityCreature) _entity, EntityHuman.class, 8.0F));
         _entity.addGoal(6, new PathfinderGoalRandomLookaround((EntityCreature) _entity));
         _entity.emtpyTargets();
         _entity.addTarget(0, new PathfinderGoalNearestAttackableTarget((EntityCreature) _entity, EntityHuman.class, true));
         
-        _entity.setCustomName("Lord Puggleston");
+        _entity.setCustomName("Mr Skeletal");
         _entity.setCustomNameVisible(true);
         
-        _entity.setExpToDrop(250);
+        _entity.setExpToDrop(400);
         
         _entity.spawn(location);
     }

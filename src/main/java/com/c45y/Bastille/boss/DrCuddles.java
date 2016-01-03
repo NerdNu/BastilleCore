@@ -24,59 +24,63 @@
 package com.c45y.Bastille.boss;
 
 import com.c45y.Bastille.BastilleCore;
-import com.c45y.Bastille.Entities.BastilleCaveSpider;
+import com.c45y.Bastille.Entities.BastilleCreeper;
+import java.lang.reflect.Field;
 import net.minecraft.server.v1_8_R3.Blocks;
 import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Enchantment;
 import net.minecraft.server.v1_8_R3.EntityCreature;
+import net.minecraft.server.v1_8_R3.EntityCreeper;
 import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.ItemStack;
 import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLeapAtTarget;
 import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalMeleeAttack;
 import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomStroll;
+import net.minecraft.server.v1_8_R3.PathfinderGoalSwell;
 import org.bukkit.Location;
 
 /**
  *
  * @author c45y
  */
-public class LordPuggleSton extends BastilleBoss {
+public class DrCuddles extends BastilleBoss {
     
-    public LordPuggleSton(BastilleCore plugin) {
-        super(plugin, "Lord Puggleston");
+    public DrCuddles(BastilleCore plugin) {
+        super(plugin, "Dr Cuddles");
     }
 
     @Override
     public void spawn(Location location) {
-        _entity = new BastilleCaveSpider(location.getWorld());
-        _entity = _entity.maxhealth(20D).health(20F);
-        _entity = _entity.ignoreDamageSource(DamageSource.FIRE);
-        _entity = _entity.speed(0.7F);
-        _entity = _entity.damage(2D);
+        _entity = new BastilleCreeper(location.getWorld());
+        _entity = _entity.maxhealth(60D).health(60F);
+        _entity = _entity.ignoreDamageSource(DamageSource.LAVA);
+        _entity = _entity.speed(0.4F);
+        _entity = _entity.damage(0D);
         
-        ItemStack is = new ItemStack(Blocks.RED_FLOWER);
-        is.addEnchantment(Enchantment.FIRE_ASPECT, 2);
-        _entity.setEquipment(0, is);
-        _entity.setDropChance(0, 0F);
+        try {
+            Field field = EntityCreeper.class.getDeclaredField("explosionRadius");
+            field.setAccessible(true);
+            field.setInt(_entity, 12);
+        } catch (Exception e) {}
         
+        try {
+            Field field = EntityCreeper.class.getDeclaredField("maxFuseTicks");
+            field.setAccessible(true);
+            field.setInt(_entity, 8);
+        } catch (Exception e) {}
+                
         _entity.emtpyGoals();
-        _entity.addGoal(0, new PathfinderGoalMeleeAttack((EntityCreature) _entity, EntityHuman.class, 1.0D, false));
         _entity.addGoal(1, new PathfinderGoalFloat((EntityCreature) _entity));
-        _entity.addGoal(2, new PathfinderGoalLeapAtTarget((EntityCreature) _entity, 0.2F));
-        _entity.addGoal(3, new PathfinderGoalRandomStroll((EntityCreature) _entity, 0.3D));
+        _entity.addGoal(2, new PathfinderGoalSwell((EntityCreeper) _entity));
         _entity.addGoal(4, new PathfinderGoalLookAtPlayer((EntityCreature) _entity, EntityHuman.class, 8.0F));
         _entity.addGoal(6, new PathfinderGoalRandomLookaround((EntityCreature) _entity));
         _entity.emtpyTargets();
         _entity.addTarget(0, new PathfinderGoalNearestAttackableTarget((EntityCreature) _entity, EntityHuman.class, true));
         
-        _entity.setCustomName("Lord Puggleston");
+        _entity.setCustomName("Dr Cuddles");
         _entity.setCustomNameVisible(true);
         
-        _entity.setExpToDrop(250);
+        _entity.setExpToDrop(300);
         
         _entity.spawn(location);
     }

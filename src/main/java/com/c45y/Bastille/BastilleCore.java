@@ -72,7 +72,13 @@ public class BastilleCore extends JavaPlugin {
         } else if (name.equalsIgnoreCase("LordPuggleston")) {
             new LordPuggleSton(this).spawn(location);
             return true;
-        } // else { ....
+        } else if (name.equalsIgnoreCase("DrCuddles")) {
+            new DrCuddles(this).spawn(location);
+            return true;
+        } else if (name.equalsIgnoreCase("MrSkeletal")) {
+            new MrSkeletal(this).spawn(location);
+            return true;
+        }  // else { ....
 
         return false;
     }
