@@ -25,7 +25,9 @@ package com.c45y.Bastille;
 
 import com.c45y.Bastille.boss.*;
 import com.c45y.Bastille.command.BastilleCommand;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.Set;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -34,6 +36,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class BastilleCore extends JavaPlugin {
     private static BastilleCore _instance;
     private BastilleListener _listener;
+    private HashMap<String, BastilleBoss> _bosses;
     
     private Random pluginRandom = new Random();  
     public final ChatColor _pluginColor = ChatColor.GREEN;
@@ -51,11 +54,33 @@ public class BastilleCore extends JavaPlugin {
         /* Create a static reference to ourself */
         _instance = this;
                 
+        _bosses = new HashMap<String, BastilleBoss>();
+        /* Register our boss spawners */
+        registerBoss("SirMeowingtons", new SirMeowingtons(this));
+        registerBoss("LordPuggleston", new LordPuggleston(this));
+        registerBoss("DrCuddles", new DrCuddles(this));
+        registerBoss("MrSkeletal", new MrSkeletal(this));
+        
         /* Register our listener(s) */
         _listener = new BastilleListener(this);
         getServer().getPluginManager().registerEvents(_listener, this);
         
         getCommand("bastille").setExecutor(new BastilleCommand(this));
+    }
+    
+    public void registerBoss(String name, BastilleBoss boss) {
+        _bosses.put(name.toLowerCase(), boss);
+    }
+    
+    public BastilleBoss getBoss(String name) {
+        if (_bosses.containsKey(name.toLowerCase())) {
+            return _bosses.get(name.toLowerCase());
+        }
+        return null;
+    }
+    
+    public Set<String> getBosses() {
+        return _bosses.keySet();
     }
 
     @Override
@@ -63,24 +88,14 @@ public class BastilleCore extends JavaPlugin {
         getServer().getScheduler().cancelTasks(this);
     }
     
-    public boolean spawnBoss(String name, Location location) {
-        // There has to be a better way of doing this?
+    public boolean spawnBoss(String name, Location location) {       
+        BastilleBoss boss = getBoss(name);
+        if (boss == null) {
+            return false;
+        }
         
-        if (name.equalsIgnoreCase("SirMeowingtons")) {
-            new SirMeowingtons(this).spawn(location);
-            return true;
-        } else if (name.equalsIgnoreCase("LordPuggleston")) {
-            new LordPuggleston(this).spawn(location);
-            return true;
-        } else if (name.equalsIgnoreCase("DrCuddles")) {
-            new DrCuddles(this).spawn(location);
-            return true;
-        } else if (name.equalsIgnoreCase("MrSkeletal")) {
-            new MrSkeletal(this).spawn(location);
-            return true;
-        }  // else { ....
-
-        return false;
+        boss.spawn(location);
+        return true;
     }
     
     /**

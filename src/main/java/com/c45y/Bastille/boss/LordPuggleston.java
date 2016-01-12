@@ -47,7 +47,7 @@ import org.bukkit.Location;
 public class LordPuggleston extends BastilleBoss {
     
     public LordPuggleston(BastilleCore plugin) {
-        super(plugin, "Lord Puggleston");
+        super(plugin, "Lord Puggleston", 250);
     }
 
     @Override
@@ -75,9 +75,9 @@ public class LordPuggleston extends BastilleBoss {
         
         _entity.setCustomName("Lord Puggleston");
         _entity.setCustomNameVisible(true);
-        
-        _entity.setExpToDrop(250);
-        
+                
         _entity.spawn(location);
+        
+        patchMetadata();
     }
 }

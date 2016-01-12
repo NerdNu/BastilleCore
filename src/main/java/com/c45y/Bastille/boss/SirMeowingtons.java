@@ -46,9 +46,8 @@ import org.bukkit.Location;
  * @author c45y
  */
 public class SirMeowingtons extends BastilleBoss {
-    
     public SirMeowingtons(BastilleCore plugin) {
-        super(plugin, "Sir Meowingtons");
+        super(plugin, "Sir Meowingtons", 1000);
     }
 
     @Override
@@ -80,9 +79,9 @@ public class SirMeowingtons extends BastilleBoss {
         
         _entity.setCustomName("Sir Meowingtons");
         _entity.setCustomNameVisible(true);
-        
-        _entity.setExpToDrop(1000);
-        
+
         _entity.spawn(location);
+        
+        patchMetadata();
     }
 }

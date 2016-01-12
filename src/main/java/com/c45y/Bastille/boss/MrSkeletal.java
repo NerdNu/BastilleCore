@@ -43,14 +43,13 @@ import org.bukkit.Location;
 public class MrSkeletal extends BastilleBoss {
     
     public MrSkeletal(BastilleCore plugin) {
-        super(plugin, "Mr Skeletal");
+        super(plugin, "Mr Skeletal", 400);
     }
 
     @Override
     public void spawn(Location location) {
         _entity = new BastilleSkeleton(location.getWorld());
         _entity = _entity.maxhealth(80D).health(80F);
-        _entity = _entity.ignoreDamageSource(DamageSource.FALL);
         _entity = _entity.speed(0.4F);
         _entity = _entity.damage(3D);
                 
@@ -65,9 +64,9 @@ public class MrSkeletal extends BastilleBoss {
         
         _entity.setCustomName("Mr Skeletal");
         _entity.setCustomNameVisible(true);
-        
-        _entity.setExpToDrop(400);
-        
+                
         _entity.spawn(location);
+        
+        patchMetadata();
     }
 }

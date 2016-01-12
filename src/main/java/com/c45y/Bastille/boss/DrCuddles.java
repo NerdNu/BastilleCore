@@ -44,7 +44,7 @@ import org.bukkit.Location;
 public class DrCuddles extends BastilleBoss {
     
     public DrCuddles(BastilleCore plugin) {
-        super(plugin, "Dr Cuddles");
+        super(plugin, "Dr Cuddles", 300);
     }
 
     @Override
@@ -77,9 +77,9 @@ public class DrCuddles extends BastilleBoss {
         
         _entity.setCustomName("Dr Cuddles");
         _entity.setCustomNameVisible(true);
-        
-        _entity.setExpToDrop(300);
-        
+                
         _entity.spawn(location);
+        
+        patchMetadata();
     }
 }
