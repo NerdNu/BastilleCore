@@ -26,7 +26,6 @@ package com.c45y.Bastille.boss;
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.BastilleEntity;
 import org.bukkit.Location;
-import org.bukkit.event.entity.EntityDeathEvent;
 
 /**
  *
