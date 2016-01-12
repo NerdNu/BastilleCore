@@ -44,9 +44,9 @@ import org.bukkit.Location;
  *
  * @author c45y
  */
-public class LordPuggleSton extends BastilleBoss {
+public class LordPuggleston extends BastilleBoss {
     
-    public LordPuggleSton(BastilleCore plugin) {
+    public LordPuggleston(BastilleCore plugin) {
         super(plugin, "Lord Puggleston");
     }
 

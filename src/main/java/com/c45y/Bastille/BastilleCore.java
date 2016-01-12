@@ -70,7 +70,7 @@ public class BastilleCore extends JavaPlugin {
             new SirMeowingtons(this).spawn(location);
             return true;
         } else if (name.equalsIgnoreCase("LordPuggleston")) {
-            new LordPuggleSton(this).spawn(location);
+            new LordPuggleston(this).spawn(location);
             return true;
         } else if (name.equalsIgnoreCase("DrCuddles")) {
             new DrCuddles(this).spawn(location);

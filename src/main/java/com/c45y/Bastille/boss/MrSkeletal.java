@@ -53,12 +53,6 @@ public class MrSkeletal extends BastilleBoss {
         _entity = _entity.ignoreDamageSource(DamageSource.FALL);
         _entity = _entity.speed(0.4F);
         _entity = _entity.damage(3D);
-        
-//        try {
-//            Field field = EntitySkeleton.class.getDeclaredField("explosionRadius");
-//            field.setAccessible(true);
-//            field.setInt(_entity, 12);
-//        } catch (Exception e) {}
                 
         _entity.emtpyGoals();
         _entity.addGoal(1, new PathfinderGoalFloat((EntityCreature) _entity));

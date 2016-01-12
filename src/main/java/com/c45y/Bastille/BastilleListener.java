@@ -56,10 +56,13 @@ public class BastilleListener implements Listener {
                 boss = new SirMeowingtons(_plugin);
                 break;
             case 1:
-                boss = new LordPuggleSton(_plugin);
+                boss = new LordPuggleston(_plugin);
                 break;
             case 2:
                 boss = new DrCuddles(_plugin);
+                break;
+            case 3:
+                boss = new MrSkeletal(_plugin);
                 break;
             default:
                 return;
