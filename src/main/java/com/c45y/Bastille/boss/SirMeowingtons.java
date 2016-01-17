@@ -53,7 +53,7 @@ public class SirMeowingtons extends BastilleBoss {
     @Override
     public void spawn(Location location) {
         _entity = new BastilleZombie(location.getWorld());
-        _entity = _entity.maxhealth(2000D).health(2000F);
+        _entity = _entity.maxhealth(2000D).health(1500F);
         _entity = _entity.ignoreDamageSource(DamageSource.BURN);
         _entity = _entity.speed(0.4F);
         _entity = _entity.damage(0.5D);
@@ -61,7 +61,7 @@ public class SirMeowingtons extends BastilleBoss {
         ItemStack is = new ItemStack(Items.STICK);
         is.addEnchantment(Enchantment.KNOCKBACK, 6);
         _entity.setEquipment(0, is);
-        _entity.setDropChance(0, 0F);
+        _entity.setDropChance(0, 0.1F);
         
         ItemStack ish = new ItemStack(Blocks.PUMPKIN);
         _entity.setEquipment(4, ish);

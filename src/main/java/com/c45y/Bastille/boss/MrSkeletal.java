@@ -25,10 +25,12 @@ package com.c45y.Bastille.boss;
 
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.Entities.BastilleSkeleton;
-import net.minecraft.server.v1_8_R3.DamageSource;
+import net.minecraft.server.v1_8_R3.Enchantment;
 import net.minecraft.server.v1_8_R3.EntityCreature;
 import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.EntitySkeleton;
+import net.minecraft.server.v1_8_R3.ItemStack;
+import net.minecraft.server.v1_8_R3.Items;
 import net.minecraft.server.v1_8_R3.PathfinderGoalArrowAttack;
 import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
 import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
@@ -64,6 +66,12 @@ public class MrSkeletal extends BastilleBoss {
         
         _entity.setCustomName("Mr Skeletal");
         _entity.setCustomNameVisible(true);
+        
+        ItemStack is = new ItemStack(Items.BOW);
+        is.addEnchantment(Enchantment.ARROW_FIRE, 6);
+        is.addEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+        _entity.setEquipment(0, is);
+        _entity.setDropChance(0, 0F);
                 
         _entity.spawn(location);
         
