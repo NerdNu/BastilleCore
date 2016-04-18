@@ -26,7 +26,7 @@ package com.c45y.Bastille.boss;
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.BastilleEntity;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
 import org.bukkit.metadata.FixedMetadataValue;
 
 /**
@@ -38,56 +38,56 @@ public abstract class BastilleBoss {
     protected BastilleEntity _entity;
     private String _name;
     private int _exp;
-    
+
     public BastilleBoss(BastilleCore plugin, String name) {
         this(plugin, name, 20);
     }
-    
+
     public BastilleBoss(BastilleCore plugin, String name, int exp) {
         _plugin = plugin;
         _name = name;
         _exp = exp;
     }
-        
+
     public String getName() {
         return _name;
     }
-    
+
     public String getMachineName() {
         return  _name.replace(" ", "");
     }
-    
+
     public int getExp() {
         return _exp;
     }
-    
+
     public BastilleEntity getEntity() {
         return _entity;
     }
-    
+
     public void patchMetadata() {
         CraftEntity e = _entity.getBukkitEntity();
         e.setMetadata("bastille.name", new FixedMetadataValue(_plugin, getMachineName()));
         e.setMetadata("bastille.exp", new FixedMetadataValue(_plugin, _exp));
     }
-    
+
     public static String getMetaName(CraftEntity e) {
         if (e.hasMetadata("bastille.name")) {
             return e.getMetadata("bastille.name").get(0).asString();
         }
         return null;
     }
-    
+
     public static Integer getMetaExp(CraftEntity e) {
         if (e.hasMetadata("bastille.exp")) {
             return e.getMetadata("bastille.exp").get(0).asInt();
         }
         return null;
     }
-    
+
     /**
      * Spawn our boss mob, should be a fairly direct mapping to Bastille*.spawn
      * @param location
      */
-    public abstract void spawn(Location location); 
+    public abstract void spawn(Location location);
 }

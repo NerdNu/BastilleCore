@@ -25,20 +25,23 @@ package com.c45y.Bastille.boss;
 
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.Entities.BastilleZombie;
-import net.minecraft.server.v1_8_R3.Blocks;
-import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Enchantment;
-import net.minecraft.server.v1_8_R3.EntityCreature;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.Items;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalMeleeAttack;
-import net.minecraft.server.v1_8_R3.PathfinderGoalMoveTowardsRestriction;
-import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomStroll;
+
+import net.minecraft.server.v1_9_R1.Blocks;
+import net.minecraft.server.v1_9_R1.DamageSource;
+import net.minecraft.server.v1_9_R1.Enchantment;
+import net.minecraft.server.v1_9_R1.EntityCreature;
+import net.minecraft.server.v1_9_R1.EntityHuman;
+import net.minecraft.server.v1_9_R1.EnumItemSlot;
+import net.minecraft.server.v1_9_R1.ItemStack;
+import net.minecraft.server.v1_9_R1.Items;
+import net.minecraft.server.v1_9_R1.PathfinderGoalFloat;
+import net.minecraft.server.v1_9_R1.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_9_R1.PathfinderGoalMeleeAttack;
+import net.minecraft.server.v1_9_R1.PathfinderGoalMoveTowardsRestriction;
+import net.minecraft.server.v1_9_R1.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_9_R1.PathfinderGoalRandomLookaround;
+import net.minecraft.server.v1_9_R1.PathfinderGoalRandomStroll;
+
 import org.bukkit.Location;
 
 /**
@@ -57,31 +60,31 @@ public class SirMeowingtons extends BastilleBoss {
         _entity = _entity.ignoreDamageSource(DamageSource.BURN);
         _entity = _entity.speed(0.4F);
         _entity = _entity.damage(0.5D);
-        
+
         ItemStack is = new ItemStack(Items.STICK);
-        is.addEnchantment(Enchantment.KNOCKBACK, 6);
-        _entity.setEquipment(0, is);
-        _entity.setDropChance(0, 0.1F);
-        
+        is.addEnchantment(Enchantment.b("knockback"), 6);
+        _entity.setEquipment(EnumItemSlot.MAINHAND, is);
+        _entity.setDropChance(EnumItemSlot.MAINHAND, 0.1F);
+
         ItemStack ish = new ItemStack(Blocks.PUMPKIN);
-        _entity.setEquipment(4, ish);
-        _entity.setDropChance(4, 0F);
-        
+        _entity.setEquipment(EnumItemSlot.HEAD, ish);
+        _entity.setDropChance(EnumItemSlot.HEAD, 0F);
+
         _entity.emtpyGoals();
         _entity.addGoal(0, new PathfinderGoalFloat((EntityCreature) _entity));
-        _entity.addGoal(2, new PathfinderGoalMeleeAttack((EntityCreature) _entity, EntityHuman.class, 1.0D, false));
+        _entity.addGoal(2, new PathfinderGoalMeleeAttack((EntityCreature) _entity, 1.0D, false));
         _entity.addGoal(5, new PathfinderGoalMoveTowardsRestriction((EntityCreature) _entity, 1.0D));
         _entity.addGoal(7, new PathfinderGoalRandomStroll((EntityCreature) _entity, 1.0D));
         _entity.addGoal(8, new PathfinderGoalLookAtPlayer((EntityCreature) _entity, EntityHuman.class, 8.0F));
         _entity.addGoal(8, new PathfinderGoalRandomLookaround((EntityCreature) _entity));
         _entity.emtpyTargets();
         _entity.addTarget(0, new PathfinderGoalNearestAttackableTarget((EntityCreature) _entity, EntityHuman.class, true));
-        
+
         _entity.setCustomName("Sir Meowingtons");
         _entity.setCustomNameVisible(true);
 
         _entity.spawn(location);
-        
+
         patchMetadata();
     }
 }

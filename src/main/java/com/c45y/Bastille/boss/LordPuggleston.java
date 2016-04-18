@@ -25,19 +25,22 @@ package com.c45y.Bastille.boss;
 
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.Entities.BastilleCaveSpider;
-import net.minecraft.server.v1_8_R3.Blocks;
-import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Enchantment;
-import net.minecraft.server.v1_8_R3.EntityCreature;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLeapAtTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalMeleeAttack;
-import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomStroll;
+
+import net.minecraft.server.v1_9_R1.Blocks;
+import net.minecraft.server.v1_9_R1.DamageSource;
+import net.minecraft.server.v1_9_R1.Enchantment;
+import net.minecraft.server.v1_9_R1.EntityCreature;
+import net.minecraft.server.v1_9_R1.EntityHuman;
+import net.minecraft.server.v1_9_R1.EnumItemSlot;
+import net.minecraft.server.v1_9_R1.ItemStack;
+import net.minecraft.server.v1_9_R1.PathfinderGoalFloat;
+import net.minecraft.server.v1_9_R1.PathfinderGoalLeapAtTarget;
+import net.minecraft.server.v1_9_R1.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_9_R1.PathfinderGoalMeleeAttack;
+import net.minecraft.server.v1_9_R1.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_9_R1.PathfinderGoalRandomLookaround;
+import net.minecraft.server.v1_9_R1.PathfinderGoalRandomStroll;
+
 import org.bukkit.Location;
 
 /**
@@ -45,7 +48,7 @@ import org.bukkit.Location;
  * @author c45y
  */
 public class LordPuggleston extends BastilleBoss {
-    
+
     public LordPuggleston(BastilleCore plugin) {
         super(plugin, "Lord Puggleston", 250);
     }
@@ -54,17 +57,17 @@ public class LordPuggleston extends BastilleBoss {
     public void spawn(Location location) {
         _entity = new BastilleCaveSpider(location.getWorld());
         _entity = _entity.maxhealth(20D).health(20F);
-        _entity = _entity.ignoreDamageSource(DamageSource.FIRE);
+        _entity = _entity.ignoreDamageSource(DamageSource.BURN);
         _entity = _entity.speed(0.7F);
         _entity = _entity.damage(2D);
-        
+
         ItemStack is = new ItemStack(Blocks.RED_FLOWER);
-        is.addEnchantment(Enchantment.FIRE_ASPECT, 2);
-        _entity.setEquipment(0, is);
-        _entity.setDropChance(0, 0F);
-        
+        is.addEnchantment(Enchantment.b("fire_aspect"), 2);
+        _entity.setEquipment(EnumItemSlot.MAINHAND, is);
+        _entity.setDropChance(EnumItemSlot.MAINHAND, 0F);
+
         _entity.emtpyGoals();
-        _entity.addGoal(0, new PathfinderGoalMeleeAttack((EntityCreature) _entity, EntityHuman.class, 1.0D, false));
+        _entity.addGoal(0, new PathfinderGoalMeleeAttack((EntityCreature) _entity, 1.0D, false));
         _entity.addGoal(1, new PathfinderGoalFloat((EntityCreature) _entity));
         _entity.addGoal(2, new PathfinderGoalLeapAtTarget((EntityCreature) _entity, 0.2F));
         _entity.addGoal(3, new PathfinderGoalRandomStroll((EntityCreature) _entity, 0.3D));
@@ -72,12 +75,12 @@ public class LordPuggleston extends BastilleBoss {
         _entity.addGoal(6, new PathfinderGoalRandomLookaround((EntityCreature) _entity));
         _entity.emtpyTargets();
         _entity.addTarget(0, new PathfinderGoalNearestAttackableTarget((EntityCreature) _entity, EntityHuman.class, true));
-        
+
         _entity.setCustomName("Lord Puggleston");
         _entity.setCustomNameVisible(true);
-                
+
         _entity.spawn(location);
-        
+
         patchMetadata();
     }
 }
