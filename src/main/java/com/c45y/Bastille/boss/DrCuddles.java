@@ -26,15 +26,15 @@ package com.c45y.Bastille.boss;
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.Entities.BastilleCreeper;
 import java.lang.reflect.Field;
-import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.EntityCreature;
-import net.minecraft.server.v1_8_R3.EntityCreeper;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_8_R3.PathfinderGoalSwell;
+import net.minecraft.server.v1_9_R1.DamageSource;
+import net.minecraft.server.v1_9_R1.EntityCreature;
+import net.minecraft.server.v1_9_R1.EntityCreeper;
+import net.minecraft.server.v1_9_R1.EntityHuman;
+import net.minecraft.server.v1_9_R1.PathfinderGoalFloat;
+import net.minecraft.server.v1_9_R1.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_9_R1.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_9_R1.PathfinderGoalRandomLookaround;
+import net.minecraft.server.v1_9_R1.PathfinderGoalSwell;
 import org.bukkit.Location;
 
 /**
@@ -42,7 +42,7 @@ import org.bukkit.Location;
  * @author c45y
  */
 public class DrCuddles extends BastilleBoss {
-    
+
     public DrCuddles(BastilleCore plugin) {
         super(plugin, "Dr Cuddles", 300);
     }
@@ -54,19 +54,19 @@ public class DrCuddles extends BastilleBoss {
         _entity = _entity.ignoreDamageSource(DamageSource.LAVA);
         _entity = _entity.speed(0.4F);
         _entity = _entity.damage(0D);
-        
+
         try {
             Field field = EntityCreeper.class.getDeclaredField("explosionRadius");
             field.setAccessible(true);
             field.setInt(_entity, 12);
         } catch (Exception e) {}
-        
+
         try {
             Field field = EntityCreeper.class.getDeclaredField("maxFuseTicks");
             field.setAccessible(true);
             field.setInt(_entity, 8);
         } catch (Exception e) {}
-                
+
         _entity.emtpyGoals();
         _entity.addGoal(1, new PathfinderGoalFloat((EntityCreature) _entity));
         _entity.addGoal(2, new PathfinderGoalSwell((EntityCreeper) _entity));
@@ -74,12 +74,12 @@ public class DrCuddles extends BastilleBoss {
         _entity.addGoal(6, new PathfinderGoalRandomLookaround((EntityCreature) _entity));
         _entity.emtpyTargets();
         _entity.addTarget(0, new PathfinderGoalNearestAttackableTarget((EntityCreature) _entity, EntityHuman.class, true));
-        
+
         _entity.setCustomName("Dr Cuddles");
         _entity.setCustomNameVisible(true);
-                
+
         _entity.spawn(location);
-        
+
         patchMetadata();
     }
 }

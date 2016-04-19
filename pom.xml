@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.c45y</groupId>
     <artifactId>BastilleCore</artifactId>
-    <version>2.1</version>
+    <version>3.0</version>
     <name>Bastille-Core</name>
     <url>http://c45y.com/</url>
     <repositories>
@@ -12,6 +12,7 @@
         </repository>
     </repositories>
     <build>
+        <defaultGoal>clean package</defaultGoal>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -33,13 +34,13 @@
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.8.7-R0.1-SNAPSHOT</version>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.9-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.c45y</groupId>
             <artifactId>BastilleEntities</artifactId>
-            <version>3.1</version>
+            <version>4.0</version>
         </dependency>
     </dependencies>
 </project>

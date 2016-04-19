@@ -25,17 +25,20 @@ package com.c45y.Bastille.boss;
 
 import com.c45y.Bastille.BastilleCore;
 import com.c45y.Bastille.Entities.BastilleSkeleton;
-import net.minecraft.server.v1_8_R3.Enchantment;
-import net.minecraft.server.v1_8_R3.EntityCreature;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.EntitySkeleton;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.Items;
-import net.minecraft.server.v1_8_R3.PathfinderGoalArrowAttack;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_8_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
+
+import net.minecraft.server.v1_9_R1.Enchantment;
+import net.minecraft.server.v1_9_R1.EntityCreature;
+import net.minecraft.server.v1_9_R1.EntityHuman;
+import net.minecraft.server.v1_9_R1.EntitySkeleton;
+import net.minecraft.server.v1_9_R1.EnumItemSlot;
+import net.minecraft.server.v1_9_R1.ItemStack;
+import net.minecraft.server.v1_9_R1.Items;
+import net.minecraft.server.v1_9_R1.PathfinderGoalArrowAttack;
+import net.minecraft.server.v1_9_R1.PathfinderGoalFloat;
+import net.minecraft.server.v1_9_R1.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_9_R1.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_9_R1.PathfinderGoalRandomLookaround;
+
 import org.bukkit.Location;
 
 /**
@@ -43,7 +46,7 @@ import org.bukkit.Location;
  * @author c45y
  */
 public class MrSkeletal extends BastilleBoss {
-    
+
     public MrSkeletal(BastilleCore plugin) {
         super(plugin, "Mr Skeletal", 400);
     }
@@ -54,27 +57,27 @@ public class MrSkeletal extends BastilleBoss {
         _entity = _entity.maxhealth(80D).health(80F);
         _entity = _entity.speed(0.4F);
         _entity = _entity.damage(3D);
-                
+
         _entity.emtpyGoals();
         _entity.addGoal(1, new PathfinderGoalFloat((EntityCreature) _entity));
-        
+
         _entity.addGoal(2, new PathfinderGoalArrowAttack((EntitySkeleton) _entity, 0.25D, 20, 10.0F));
         _entity.addGoal(4, new PathfinderGoalLookAtPlayer((EntityCreature) _entity, EntityHuman.class, 8.0F));
         _entity.addGoal(6, new PathfinderGoalRandomLookaround((EntityCreature) _entity));
         _entity.emtpyTargets();
         _entity.addTarget(0, new PathfinderGoalNearestAttackableTarget((EntityCreature) _entity, EntityHuman.class, true));
-        
+
         _entity.setCustomName("Mr Skeletal");
         _entity.setCustomNameVisible(true);
-        
+
         ItemStack is = new ItemStack(Items.BOW);
-        is.addEnchantment(Enchantment.ARROW_FIRE, 6);
-        is.addEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
-        _entity.setEquipment(0, is);
-        _entity.setDropChance(0, 0F);
-                
+        is.addEnchantment(Enchantment.b("flame"), 6);
+        is.addEnchantment(Enchantment.b("knockback"), 2);
+        _entity.setEquipment(EnumItemSlot.MAINHAND, is);
+        _entity.setDropChance(EnumItemSlot.MAINHAND, 0F);
+
         _entity.spawn(location);
-        
+
         patchMetadata();
     }
 }

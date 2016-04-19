@@ -26,7 +26,7 @@ package com.c45y.Bastille;
 import com.c45y.Bastille.boss.*;
 import java.util.logging.Level;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,21 +40,21 @@ import org.bukkit.event.entity.EntityDeathEvent;
  */
 public class BastilleListener implements Listener {
     private final BastilleCore _plugin;
-    
+
     public BastilleListener(BastilleCore plugin) {
         _plugin = plugin;
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
         if(event.getSpawnReason() != SpawnReason.NATURAL) {
             return;
         }
-        
+
         BastilleBoss boss;
-        
+
         switch (_plugin.getRandomChance()) {
-            case 0: 
+            case 0:
                 boss = new SirMeowingtons(_plugin);
                 break;
             case 1:
@@ -69,15 +69,15 @@ public class BastilleListener implements Listener {
             default:
                 return;
         }
-        
+
         Location location = event.getEntity().getLocation();
         _plugin.getLogger().log(Level.INFO, "A boss mob has been spawned | {0} at {1} {2} {3}", new Object[] {boss.getName(), location.getX(), location.getY(), location.getZ()});
         boss.spawn(location);
         event.setCancelled(true);
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntityDeath(EntityDeathEvent event) {       
+    public void onEntityDeath(EntityDeathEvent event) {
         if (event.getEntity() == null || event.getEntity().getCustomName() == null) {
             return;
         }
@@ -85,7 +85,7 @@ public class BastilleListener implements Listener {
         if (customName == null) {
             return;
         }
-       
+
         BastilleBoss boss = _plugin.getBoss(customName);
         if (boss != null) {
             System.out.println(customName + " found! Setting exp to: " + boss.getExp());
